@@ -10,4 +10,5 @@ public class SurveyXApplication {
         SpringApplication.run(SurveyXApplication.class, args);
     }
 
+
 }
