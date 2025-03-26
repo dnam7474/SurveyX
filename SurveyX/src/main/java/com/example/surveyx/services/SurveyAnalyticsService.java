@@ -32,7 +32,7 @@ public class SurveyAnalyticsService {
     @Autowired
     private ResponseRepository responseRepository;
 
-    @Value("${openai.api.key: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}")
+    @Value("${openai.api.key}")
     private String openaiApiKey;
 
     @Value("${openai.api.url:https://api.openai.com/v1/chat/completions}")
