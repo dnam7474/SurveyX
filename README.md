@@ -152,35 +152,6 @@ SurveyX is a comprehensive, full-stack survey management application designed to
     npm start
     ```
 
-🗂️ Project Structure
-surveyx/
-├── backend/
-│   ├── src/
-│   │   ├── main/
-│   │   │   ├── java/
-│   │   │   │   └── com/example/surveyx/
-│   │   │   │       ├── config/
-│   │   │   │       ├── controllers/
-│   │   │   │       ├── models/
-│   │   │   │       ├── repositories/
-│   │   │   │       ├── services/
-│   │   │   │       └── security/
-│   │   │   └── resources/
-│   │   └── test/
-│   └── pom.xml
-│
-└── frontend/
-    ├── src/
-    │   ├── components/
-    │   │   ├── auth/
-    │   │   ├── surveys/
-    │   │   ├── questions/
-    │   │   └── responses/
-    │   ├── services/
-    │   ├── styles/
-    │   └── App.js
-    └── package.json
-
 
 
 📡 API Documentation
