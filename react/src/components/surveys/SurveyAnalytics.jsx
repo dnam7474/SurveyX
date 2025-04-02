@@ -1,26 +1,30 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { getSurveyAnalytics } from '../../services/analyticsService';
+import { getResponsesBySurvey } from '../../services/responseService';
 import LoadingSpinner from '../common/LoadingSpinner';
 import '../../styles/surveys.css';
 
 const SurveyAnalytics = () => {
   const { id } = useParams();
   const [analytics, setAnalytics] = useState(null);
+  const [responses, setResponses] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
 
   useEffect(() => {
-    const fetchAnalytics = async () => {
+    const fetchData = async () => {
       try {
-        const response = await getSurveyAnalytics(id);
-        console.log('Full analytics response:', response.data);
-        setAnalytics(response.data);
+        const analyticsResponse = await getSurveyAnalytics(id);
+        setAnalytics(analyticsResponse.data);
+
+        const responsesResponse = await getResponsesBySurvey(id);
+        setResponses(responsesResponse.data);
       } catch (err) {
         const errorMessage = 
           err.response?.data?.message || 
           err.response?.statusText || 
-          'Failed to load analytics';
+          'Failed to load data';
         
         setError(errorMessage);
       } finally {
@@ -28,7 +32,7 @@ const SurveyAnalytics = () => {
       }
     };
 
-    fetchAnalytics();
+    fetchData();
   }, [id]);
 
   if (loading) {
@@ -48,35 +52,51 @@ const SurveyAnalytics = () => {
     }
   })();
 
+
+  const groupedResponses = responses.reduce((acc, response) => {
+    const respondentId = response.respondentId || 'Anonymous';
+    if (!acc[respondentId]) {
+      acc[respondentId] = [];
+    }
+    acc[respondentId].push(response);
+    return acc;
+  }, {});
+
   return (
     <div className="survey-analytics-container">
       <h2>Survey Analytics</h2>
       
       <div className="card mb-3">
         <div className="card-body">
-          <h3 className="card-title">Analysis Summary</h3>
+          <h3 className="card-title">AI Analysis</h3>
           <p>{analytics.analysisSummary}</p>
         </div>
       </div>
 
-      <div className="card">
+      <div className="card mb-3">
         <div className="card-body">
-          <h3 className="card-title">Insights</h3>
-          <div>
-            <strong>Question:</strong> {parsedInsights.question || 'N/A'}
-            <br />
-            <strong>Total Responses:</strong> {parsedInsights.response_count || 0}
-            <br />
-            <strong>Responses:</strong>
-            <ul>
-              {Array.isArray(parsedInsights.responses) 
-                ? parsedInsights.responses.map((response, index) => (
-                    <li key={index}>{response}</li>
-                  ))
-                : <li>No responses available</li>
-              }
-            </ul>
-          </div>
+          <h3 className="card-title">All Responses</h3>
+          {Object.entries(groupedResponses).map(([respondentId, respondentResponses, index]) => (
+            <div key={respondentId} className="mb-4">
+              <h4>Respondent: </h4>
+              <table className="table table-bordered">
+                <thead>
+                  <tr>
+                    <th>Question</th>
+                    <th>Response</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {respondentResponses.map((response, index) => (
+                    <tr key={index}>
+                      <td>{response.question.questionText}</td>
+                      <td>{response.answerText}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          ))}
         </div>
       </div>
     </div>
