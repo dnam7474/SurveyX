@@ -10,4 +10,5 @@ import java.util.List;
 @Repository
 public interface QuestionRepository extends JpaRepository<Question, Long> {
     List<Question> findBySurvey(Survey survey);
+    void deleteBySurvey(Survey survey);
 }
