@@ -40,9 +40,11 @@ public class SecurityConfig {
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/api/auth/**").permitAll()
-                        .requestMatchers("/survey/api/**").permitAll()
+                        .requestMatchers("/api/surveys/**").permitAll()
                         .requestMatchers("/survey/**").permitAll()
                         .requestMatchers("/api/responses/**").permitAll()
+                        .requestMatchers("/api/questions/**").permitAll()
+                        .requestMatchers("/api/analytics/survey/**").permitAll()
                         .anyRequest().authenticated()
                 )
                 .sessionManagement(session -> session
