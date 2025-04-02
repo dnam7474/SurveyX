@@ -1,4 +1,3 @@
-// src/components/responses/SubmitResponse.js
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { getSurveyByLink } from '../../services/surveyService';
@@ -26,7 +25,6 @@ const SubmitResponse = () => {
         setSurvey(response.data.survey);
         setQuestions(response.data.questions);
         
-        // Initialize answers
         const initialAnswers = {};
         response.data.questions.forEach(q => {
           initialAnswers[q.questionId] = '';
@@ -61,7 +59,6 @@ const SubmitResponse = () => {
     
     if (unansweredRequired.length > 0) {
       setError(`Please answer all required questions (${unansweredRequired.length} unanswered)`);
-      // src/components/responses/SubmitResponse.js (continued)
       return;
     }
     

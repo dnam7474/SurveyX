@@ -1,4 +1,3 @@
-// src/services/questionService.js
 import axios from '../utils/axiosConfig';
 
 export const getQuestionsBySurvey = (surveyId) => {
@@ -21,6 +20,14 @@ export const getResponsesBySurvey = (surveyId) => {
   return axios.get(`/api/responses/survey/${surveyId}`);
 };
 
-export const submitResponses = (surveyId, responses) => {
-  return axios.post(`/api/responses/survey/${surveyId}`, responses);
+export const submitResponses = async (surveyLink, responses) => {
+  try {
+    const surveyResponse = await axios.get(`/survey/api/${surveyLink}`);
+    const surveyId = surveyResponse.data.survey.surveyId;
+    
+    return axios.post(`/api/responses/survey/${surveyId}`, responses);
+  } catch (error) {
+    console.error('Error submitting responses:', error);
+    throw error;
+  }
 };
