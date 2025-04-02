@@ -43,6 +43,7 @@ public class SecurityConfig {
                         .requestMatchers("/survey/api/**").permitAll()
                         .requestMatchers("/survey/**").permitAll()
                         .requestMatchers("/api/responses/**").permitAll()
+                        .requestMatchers("/api/surveys/**").permitAll()
                         .anyRequest().authenticated()
                 )
                 .sessionManagement(session -> session
