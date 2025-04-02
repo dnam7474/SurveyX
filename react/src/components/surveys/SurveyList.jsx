@@ -42,7 +42,7 @@ const SurveyList = () => {
   const handlePublish = async (id) => {
     try {
       await publishSurvey(id);
-      fetchSurveys(); // Refresh the list
+      fetchSurveys();
     } catch (err) {
       setError('Failed to publish survey');
       console.error(err);

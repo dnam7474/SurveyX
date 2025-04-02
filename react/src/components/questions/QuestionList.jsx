@@ -1,4 +1,3 @@
-// src/components/questions/QuestionList.js
 import React, { useState } from 'react';
 import { FaEdit, FaTrash, FaArrowUp, FaArrowDown } from 'react-icons/fa';
 import QuestionForm from './QuestionForm';

@@ -17,6 +17,7 @@ import Signup from './components/auth/Signup';
 import SurveyList from './components/surveys/SurveyList';
 import SurveyForm from './components/surveys/SurveyForm';
 import SurveyDetail from './components/surveys/SurveyDetail';
+import SurveyAnalytics from './components/surveys/SurveyAnalytics';
 
 // Question components
 import QuestionList from './components/questions/QuestionList';
@@ -72,6 +73,11 @@ function App() {
             {/* Default redirect */}
             <Route path="/" element={<Navigate to="/dashboard" />} />
             <Route path="*" element={<div className="alert alert-warning">Page not found</div>} />
+            <Route path="/surveys/:id/analytics" element={
+            <PrivateRoute>
+              <SurveyAnalytics />
+            </PrivateRoute>
+          } />
           </Routes>
         </main>
         <Footer />

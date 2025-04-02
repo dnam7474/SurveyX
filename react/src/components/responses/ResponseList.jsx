@@ -1,4 +1,3 @@
-// src/components/responses/ResponseList.js
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { getResponsesBySurvey } from '../../services/responseService';
@@ -21,16 +20,13 @@ const ResponseList = () => {
     const loadData = async () => {
       try {
         setLoading(true);
-        
-        // Load survey details
+    
         const surveyResponse = await getSurveyById(surveyId);
         setSurvey(surveyResponse.data);
         
-        // Load questions
         const questionsResponse = await getQuestionsBySurvey(surveyId);
         setQuestions(questionsResponse.data);
         
-        // Load responses
         const responsesResponse = await getResponsesBySurvey(surveyId);
         setResponses(responsesResponse.data);
         
@@ -45,11 +41,9 @@ const ResponseList = () => {
   }, [surveyId]);
   
   useEffect(() => {
-    // Group responses by respondent
     if (responses.length && questions.length) {
       const byRespondent = {};
       
-      // Group by respondentId
       responses.forEach(response => {
         const respondentId = response.respondentId || 'anonymous';
         if (!byRespondent[respondentId]) {
@@ -59,12 +53,10 @@ const ResponseList = () => {
             answers: {}
           };
         }
-        
-        // Map question ID to answer
+   
         byRespondent[respondentId].answers[response.question.questionId] = response.answerText;
       });
-      
-      // Convert to array and sort by submission date
+
       const grouped = Object.values(byRespondent).sort((a, b) => {
         return new Date(b.submittedAt) - new Date(a.submittedAt);
       });
