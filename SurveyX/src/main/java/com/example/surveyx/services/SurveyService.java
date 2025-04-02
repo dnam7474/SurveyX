@@ -16,7 +16,7 @@ public class SurveyService {
     @Autowired
     private SurveyRepository surveyRepository;
 
-    @Value("${app.base-url:http://localhost:8080}")
+    @Value("${app.base-url:http://localhost:5173}")
     private String baseUrl;
 
     public List<Survey> getAllSurveys() {

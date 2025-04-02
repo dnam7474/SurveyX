@@ -52,6 +52,16 @@ public class ResponseController {
         return new ResponseEntity<>(savedResponse, HttpStatus.CREATED);
     }
 
+    @PostMapping("/survey/{surveyId}")
+    public ResponseEntity<List<Response>> saveResponsesForSurvey(
+            @PathVariable Long surveyId,
+            @RequestBody List<Response> responses
+    ) {
+        // Process and save all responses for the survey
+        List<Response> savedResponses = responseService.saveResponsesForSurvey(surveyId, responses);
+        return new ResponseEntity<>(savedResponses, HttpStatus.CREATED);
+    }
+
     @DeleteMapping("/{responseId}")
     public ResponseEntity<Void> deleteResponse(@PathVariable Long responseId) {
         Response existingResponse = responseService.getResponseById(responseId);

@@ -66,5 +66,28 @@ public class ResponseService {
     public void deleteResponse(Long responseId) {
         responseRepository.deleteById(responseId);
     }
+
+    public List<Response> saveResponsesForSurvey(Long surveyId, List<Response> responses) {
+        Survey survey = surveyRepository.findById(surveyId)
+                .orElseThrow(() -> new RuntimeException("Survey not found"));
+
+        // Generate a unique respondent ID
+        UUID respondentId = UUID.randomUUID();
+
+        // Set survey and respondent ID for each response
+        responses.forEach(response -> {
+            response.setSurvey(survey);
+            response.setRespondentId(respondentId);
+        });
+
+        // Save all responses
+        List<Response> savedResponses = responseRepository.saveAll(responses);
+
+        // Update survey response count
+        survey.setResponseCount(survey.getResponseCount() + 1);
+        surveyRepository.save(survey);
+
+        return savedResponses;
+    }
 }
 
