@@ -52,7 +52,7 @@ const SurveyForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
-    
+
     // Validation
     if (!survey.title.trim()) {
       setError('Survey title is required');

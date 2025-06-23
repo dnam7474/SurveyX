@@ -9,7 +9,7 @@ const Footer = () => {
         <div className="footer-content">
           <p>© {new Date().getFullYear()} SurveyX. All rights reserved.</p>
           <div className="footer-links">
-            <a href="#" className="footer-link">Privacy Policy</a>
+            <a href="#" className="footer-link">Privacy Policy test</a>
             <a href="#" className="footer-link">Terms of Service</a>
             <a href="#" className="footer-link">Contact Us</a>
           </div>
